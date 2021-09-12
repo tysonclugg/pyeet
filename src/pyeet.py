@@ -61,7 +61,7 @@ def decode(input: bytes, errors: str = "strict") -> typing.Tuple[str, int]:
             if line == "{~~":
                 state = state.CODE
                 continue
-            comment_match = re.match(r"^{~#(.*) *#~}$", line)
+            comment_match = re.match(r"^{~# *(.*) *#~}$", line)
             if comment_match:
                 output_lines.append(f"# {comment_match.group(1)}")
                 continue

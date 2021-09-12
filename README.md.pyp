@@ -1,4 +1,8 @@
 # Pyeet! Yeet All the Python!
+{~~
+import unicodedata
+import pyeet
+~~}
 
 Pyeet is a general-purpose language to embed asynchronous Python in *ALL* your files.
 
@@ -7,23 +11,32 @@ Pyeet takes the source from FILE and compiles it to a Python module, then runs i
 ~~~ python
 Source content...                       ...compiled into Python
 ------------------                      -----------------------
-{~# Welcome to Pyeet! #~}               # Welcome to Pyeet!
-😊                                      print('😊')
-                                        print()
-{~~                                     text = "Hello, World!"
-text = "Hello, World!"
-~~}                                     print(text)
-{~= text =~}                            print()
-                                        for x in [99, 98, 97]:
-{~~                                         print(f"{x} bottles of beer…")
-for x in [99, 98, 97]:
-    print(f"{x} bottles of beer…")      from datetime import datetime
-                                        now = datetime.now()
-from datetime import datetime
-now = datetime.now()                    print('The time is ', now(), sep='')
-~~}
-The time is {~= now() =~}
+{~~
+src = """\{~# Welcome to Pyeet! #~}
+😊
 
+\{~~
+text = "Hello, World!"
+\~~}
+\{~= text =~}
+
+\{~~
+for x in [99, 98, 97]:
+    print(f"{x} bottles of beer…")
+
+from datetime import datetime
+now = datetime.now()
+\~~}
+The time is {~= now() =~}
+""".replace('\\', '')
+compiled = src.encode('utf-8').decode('pyeet')
+for a, b in zip(src.split('\n'), compiled.split('\n') + (10 * [''])):
+    width = 40 - sum([
+        1 if unicodedata.east_asian_width(char) == 'W' else 0
+        for char in a
+    ])
+    print(f"{a:<{width}}{b}".rstrip(' '))
+~~}
 ~~~
 
 ## Installation
@@ -56,17 +69,9 @@ In the repo there is a `tests` folder that contains the following file:
 
 #### [`current_date_and_time_in_postscript.ps`](https://github.com/tysonclugg/pyeet/blob/main/tests/current_date_and_time_in_postscript.ps)
 ~~~ python
-%!PS
-% 595 842 scale
-/Times-Roman findfont
-20 scalefont
-setfont
-newpath
-70 750 moveto
 {~~
-from datetime import datetime
+print(open('tests/current_date_and_time_in_postscript.ps').read().strip())
 ~~}
-/({~= datetime.now() =~}) show
 ~~~
 
 We can use `pyeet` and `gs` (ghostscript) to render our source with the current time:
@@ -84,14 +89,11 @@ If you're curious, you can dump the compiled Python source using the `--dump` ar
 $ python -m pyeet --dump tests/current_date_and_time_in_postscript.ps
 ~~~
 ~~~ python
-print('%!PS')
-print('% 595 842 scale')
-print('/Times-Roman findfont')
-print('20 scalefont')
-print('setfont')
-print('newpath')
-print('70 750 moveto')
-from datetime import datetime
-
-print('/(', datetime.now(), ') show', sep='')
+{~~
+print(
+    open(
+        'tests/current_date_and_time_in_postscript.ps'
+    ).read().strip().encode('utf-8').decode('pyeet')
+)
+~~}
 ~~~
