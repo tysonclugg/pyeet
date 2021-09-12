@@ -60,6 +60,7 @@ def decode(input: bytes, errors: str = "strict") -> typing.Tuple[str, int]:
         elif state == state.EMIT:
             if line == "{~~":
                 state = state.CODE
+                output_lines.append("")
                 continue
             comment_match = re.match(r"^{~# *(.*) *#~}$", line)
             if comment_match:

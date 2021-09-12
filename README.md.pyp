@@ -38,6 +38,7 @@ for a, b in zip(src.split('\n'), compiled.split('\n') + (10 * [''])):
     print(f"{a:<{width}}{b}".rstrip(' '))
 ~~}
 ~~~
+Pyeet is dogfooding, this `README.md` is generated from `README.md.pyp`.
 
 ## Installation
 

@@ -10,21 +10,22 @@ Source content...                       ...compiled into Python
 {~# Welcome to Pyeet! #~}               # Welcome to Pyeet!
 😊                                      print('😊')
                                         print()
-{~~                                     text = "Hello, World!"
-text = "Hello, World!"
-~~}                                     print(text)
-{~= text =~}                            print()
-                                        for x in [99, 98, 97]:
-{~~                                         print(f"{x} bottles of beer…")
-for x in [99, 98, 97]:
-    print(f"{x} bottles of beer…")      from datetime import datetime
-                                        now = datetime.now()
-from datetime import datetime
-now = datetime.now()                    print('The time is ', now(), sep='')
+{~~
+text = "Hello, World!"                  text = "Hello, World!"
 ~~}
-The time is {~= now() =~}
+{~= text =~}                            print(text)
+                                        print()
+{~~
+for x in [99, 98, 97]:                  for x in [99, 98, 97]:
+    print(f"{x} bottles of beer…")          print(f"{x} bottles of beer…")
+
+from datetime import datetime           from datetime import datetime
+now = datetime.now()                    now = datetime.now()
+~~}
+The time is {~= now() =~}               print('The time is ', now(), sep='')
 
 ~~~
+Pyeet is dogfooding, this `README.md` is generated from `README.md.pyp`.
 
 ## Installation
 
@@ -91,6 +92,7 @@ print('20 scalefont')
 print('setfont')
 print('newpath')
 print('70 750 moveto')
+
 from datetime import datetime
 
 print('/(', datetime.now(), ') show', sep='')
